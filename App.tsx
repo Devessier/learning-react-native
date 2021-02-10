@@ -35,7 +35,7 @@ export default function App() {
         {boxes.map(({ style, text }) => (
           <View
             key={text}
-            style={[style, tw('justify-center items-center py-2 mb-2')]}
+            style={[style, tw('justify-center items-center py-2 mb-2 rounded')]}
           >
             <Text style={tw('text-white')}>{text}</Text>
           </View>
