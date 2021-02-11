@@ -3,8 +3,8 @@ import React from 'react';
 import { Text, View, SafeAreaView, FlatList } from 'react-native';
 import tw from 'tailwind-rn';
 
-import type { Color } from './components/ColorBox';
-import ColorBox from './components/ColorBox';
+import type { Color } from 'components/ColorBox';
+import ColorBox from 'components/ColorBox';
 
 interface BoxShape {
   color: Color;
