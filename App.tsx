@@ -1,30 +1,49 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View, SafeAreaView, FlatList } from 'react-native';
 import tw from 'tailwind-rn';
 
 import type { Color } from './components/ColorBox';
 import ColorBox from './components/ColorBox';
 
+interface BoxShape {
+  color: Color;
+  text: string;
+}
+
 export default function App() {
-  const boxes: { color: Color; text: string }[] = [
-    {
-      color: 'green',
-      text: 'Light green',
-    },
-    {
-      color: 'blue',
-      text: 'Blue',
-    },
-    {
-      color: 'cyan',
-      text: 'Pink',
-    },
-    {
-      color: 'orange',
-      text: 'Orange',
-    },
-  ];
+  const boxes: BoxShape[] = Array.from({ length: 6 })
+    .map(() => {
+      const skeleton: BoxShape[] = [
+        {
+          color: 'green',
+          text: 'Light green',
+        },
+        {
+          color: 'blue',
+          text: 'Blue',
+        },
+        {
+          color: 'cyan',
+          text: 'Pink',
+        },
+        {
+          color: 'orange',
+          text: 'Orange',
+        },
+        {
+          color: 'black',
+          text: 'Black',
+        },
+        {
+          color: 'pink',
+          text: 'Pink',
+        },
+      ];
+
+      return skeleton;
+    })
+    .flat();
 
   return (
     <SafeAreaView style={tw('h-full')}>
@@ -35,11 +54,15 @@ export default function App() {
           Here are somes boxes of different colours
         </Text>
 
-        {boxes.map(({ color, text }, index) => (
-          <ColorBox key={index} color={color} style={tw('mb-2')}>
-            {text}
-          </ColorBox>
-        ))}
+        <FlatList
+          data={boxes}
+          keyExtractor={(_, index) => String(index)}
+          renderItem={({ item: { color, text } }) => (
+            <ColorBox color={color} text={text} style={tw('mb-2')} />
+          )}
+          ListHeaderComponent={<Text>List Header</Text>}
+          ListFooterComponent={<Text>List Footer</Text>}
+        />
       </View>
     </SafeAreaView>
   );
