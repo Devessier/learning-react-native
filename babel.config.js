@@ -23,6 +23,7 @@ module.exports = function (api) {
             navigation: './navigation',
             components: './components',
             state: './state',
+            shared: './shared',
           },
         },
       ],

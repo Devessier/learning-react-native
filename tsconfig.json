@@ -22,7 +22,8 @@
       "@components": ["./components"],
       "@navigation": ["./navigation"],
       "@common-components": ["./common-components"],
-      "@state": ["./state"]
+      "@state": ["./state"],
+      "@shared": ["./shared"],
     },
   }
 }

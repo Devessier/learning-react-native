@@ -1,21 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, ViewProps } from 'react-native';
+import { View, StyleSheet, ViewProps, TextProps } from 'react-native';
 import tw from 'tailwind-rn';
 
-export type Color = 'cyan' | 'orange' | 'blue' | 'green' | 'black' | 'pink';
+import { TColor } from 'shared/color-palette';
 
 interface PropTypes extends ViewProps {
-  color: Color;
-  text: string;
+  color: TColor;
+  children?: ({}: { style: TextProps }) => React.ReactElement;
 }
 
 const ColorBox: React.FC<PropTypes> = ({
   color,
-  text,
   style: externalStyle,
+  children,
   ...props
-}: PropTypes) => {
-  const styles: Record<Color, StyleSheet.NamedStyles<unknown>> = {
+}) => {
+  const coloursStyles: Record<TColor, StyleSheet.NamedStyles<unknown>> = {
     green: tw('bg-green-400'),
     blue: tw('bg-blue-500'),
     cyan: tw('bg-pink-600'),
@@ -30,16 +30,29 @@ const ColorBox: React.FC<PropTypes> = ({
     <View
       style={[
         externalStyle,
-        styles[color],
-        tw('justify-center items-center py-2 rounded'),
+        coloursStyles[color],
+        styles.shadow,
+        tw('justify-center items-center py-2'),
       ]}
       {...props}
     >
-      <Text style={tw(`${invertTextColor ? 'text-gray-900' : 'text-white'}`)}>
-        {text}
-      </Text>
+      {children === undefined
+        ? null
+        : children({
+            style: tw(`${invertTextColor ? 'text-gray-900' : 'text-white'}`),
+          })}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    elevation: 2,
+  },
+});
 
 export default ColorBox;
