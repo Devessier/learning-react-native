@@ -1,55 +1,67 @@
-import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
+import React, { useState } from 'react';
+import { Text, TouchableOpacity, FlatList } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 import tw from 'tailwind-rn';
 
-import { RootStackParamList } from 'App';
+import { MainStackParamList, RootStackParamList } from 'App';
 import { IColorWithDescription } from 'shared/color-palette';
 import ColorBox from 'components/ColorBox';
-import { FlatList } from 'react-native-gesture-handler';
 
-type Props = StackScreenProps<RootStackParamList, 'Home'>;
+type HomeScreenNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<MainStackParamList, 'Home'>,
+  StackNavigationProp<RootStackParamList>
+>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+  route: RouteProp<MainStackParamList, 'Home'>;
+};
+
+interface IColorPaletteCollection {
+  title: string;
+  data: IColorWithDescription[];
+}
+
+const DEFAULT_COLOR_PALETTES: IColorPaletteCollection[] = [
+  {
+    title: 'Swag Palette',
+    data: [
+      {
+        color: 'cyan',
+        text: 'Cyan of sky',
+      },
+      {
+        color: 'blue',
+        text: 'Sea Blue',
+      },
+      {
+        color: 'orange',
+        text: 'Orange orange',
+      },
+    ],
+  },
+  {
+    title: 'Space conquest palette',
+    data: [
+      {
+        color: 'black',
+        text: 'Space black to Mars',
+      },
+      {
+        color: 'orange',
+        text: 'Sun color',
+      },
+      {
+        color: 'pink',
+        text: 'Orion color',
+      },
+    ],
+  },
+];
 
 const Home: React.FC<Props> = ({ navigation }) => {
-  const colorPalettes: {
-    title: string;
-    data: IColorWithDescription[];
-  }[] = [
-    {
-      title: 'Swag Palette',
-      data: [
-        {
-          color: 'cyan',
-          text: 'Cyan of sky',
-        },
-        {
-          color: 'blue',
-          text: 'Sea Blue',
-        },
-        {
-          color: 'orange',
-          text: 'Orange orange',
-        },
-      ],
-    },
-    {
-      title: 'Space conquest palette',
-      data: [
-        {
-          color: 'black',
-          text: 'Space black to Mars',
-        },
-        {
-          color: 'orange',
-          text: 'Sun color',
-        },
-        {
-          color: 'pink',
-          text: 'Orion color',
-        },
-      ],
-    },
-  ];
+  const [colorPalettes] = useState(DEFAULT_COLOR_PALETTES);
 
   return (
     <FlatList

@@ -1,12 +1,21 @@
 import React from 'react';
 import { Text, FlatList } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp } from '@react-navigation/stack';
 import tw from 'tailwind-rn';
 
 import ColorBox from 'components/ColorBox';
-import type { RootStackParamList } from 'App';
+import type { MainStackParamList, RootStackParamList } from 'App';
+import { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
 
-type Props = StackScreenProps<RootStackParamList, 'ColorPalette'>;
+type HomeScreenNavigationProp = CompositeNavigationProp<
+  StackNavigationProp<MainStackParamList, 'ColorPalette'>,
+  StackNavigationProp<RootStackParamList>
+>;
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+  route: RouteProp<MainStackParamList, 'ColorPalette'>;
+};
 
 const ColorPalette: React.FC<Props> = ({
   route: {
